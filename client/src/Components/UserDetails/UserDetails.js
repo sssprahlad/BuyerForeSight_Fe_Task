@@ -1,5 +1,5 @@
 import "./UserDetails.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { USERS_API } from "../../constants/constant";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ const UserDetails = () => {
 
   console.log(id, "userId")
 
-  const fetchUserDetails = async () => {
+  const fetchUserDetails = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetch(`${USERS_API}/${id}`);
@@ -24,13 +24,13 @@ const UserDetails = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     if (id) {
       fetchUserDetails();
     }
-  }, [id]);
+  }, [id, fetchUserDetails]);
 
 
   if (loading) {
@@ -56,15 +56,15 @@ const UserDetails = () => {
   return (
     <div className='user-details-container'>
       <div className='content-container'>
-       
-       <div className="button-container">
-         <button onClick={() => navigate(-1)} className="back-btn">Back</button>
-      
-        <div className="user-header">
-          <h1 className="user-name">{userDetails.name}</h1>
-          <p className="user-username">@{userDetails.username}</p>
+
+        <div className="button-container">
+          <button onClick={() => navigate(-1)} className="back-btn">Back</button>
+
+          <div className="user-header">
+            <h1 className="user-name">{userDetails.name}</h1>
+            <p className="user-username">@{userDetails.username}</p>
+          </div>
         </div>
-         </div>
 
         <div className="user-info-grid">
           <div className="info-card">
