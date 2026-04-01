@@ -9,6 +9,8 @@ const UserDetails = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [status] = useState(false);
+  console.log(status, "status");
 
   console.log(id, "userId")
 
